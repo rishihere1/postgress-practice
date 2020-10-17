@@ -59,7 +59,7 @@ public class CampaignController {
   }
 
 
-  @RequestMapping(method = RequestMethod.POST, value = "/clearAutomaticallyTest")
+  @PostMapping("/clearAutomaticallyTest")
   public CampaignSkuDetailDTO clearAutomaticallyTest(@RequestBody CampaignSkuDetailDTO campaignSkuDetailDTO) {
     CampaignSkuDetail campaignSkuDetail = new CampaignSkuDetail();
     BeanUtils.copyProperties(campaignSkuDetailDTO, campaignSkuDetail);

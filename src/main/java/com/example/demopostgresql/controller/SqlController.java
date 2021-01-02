@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demopostgresql.dto.OrderDetailsDto;
 import com.example.demopostgresql.dto.OrderDto;
-import com.example.demopostgresql.dto.SqlDto;
 import com.example.demopostgresql.services.SqlService;
 
 /**

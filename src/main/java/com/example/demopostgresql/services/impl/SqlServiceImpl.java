@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demopostgresql.dto.OrderDetailsDto;
 import com.example.demopostgresql.dto.OrderDto;
+import com.example.demopostgresql.dto.ProductResponseDto;
 import com.example.demopostgresql.entity.Customers;
 import com.example.demopostgresql.entity.Employees;
 import com.example.demopostgresql.entity.OrderDetails;
@@ -57,12 +58,12 @@ public class SqlServiceImpl implements SqlService {
       System.out.println("Customer name " + orderDto.getCustomerName() + "does not exist");
       throw new RuntimeException();
     }
-    Products product = productsRepository.findProduct(orderDto.getProductId());
-    if (product == null) {
-      System.out.println("Product with id " + orderDto.getProductId() + "does not exist");
+    List<Products> products = productsRepository.findProduct(orderDto.getProductIdToQuantityMap().keySet());
+    if (products == null) {
+      System.out.println("Product with ids: " + orderDto.getProductIdToQuantityMap().keySet() + "does not exist");
       throw new RuntimeException();
     }
-    orderProduct(customer, product, orderDto);
+    orderProduct(customer, products, orderDto);
   }
 
   @Override
@@ -79,28 +80,46 @@ public class SqlServiceImpl implements SqlService {
       Shippers shippers = orders.getShippers();
       BeanUtils.copyProperties(shippers, orderDetailsDto);
       Set<OrderDetails> orderDetailsSet = orders.getOrderDetails();
+      List<ProductResponseDto> productResponseDtos = new ArrayList<>();
       for (OrderDetails orderDetails : orderDetailsSet) {
         BeanUtils.copyProperties(orderDetails, orderDetailsDto);
         Products products = orderDetails.getProducts();
-        BeanUtils.copyProperties(products, orderDetailsDto);
+        ProductResponseDto productResponseDto = new ProductResponseDto();
+        BeanUtils.copyProperties(products, productResponseDto);
+        productResponseDto.setQuantity(orderDetails.getQuantity());
+        productResponseDtos.add(productResponseDto);
       }
+      orderDetailsDto.setProductResponseDtoList(productResponseDtos);
       orderDetailsDtos.add(orderDetailsDto);
     }
     return orderDetailsDtos;
   }
 
-  public void orderProduct(Customers customer, Products product, OrderDto orderDto) {
+  public void orderProduct(Customers customer, List<Products> productsList, OrderDto orderDto) {
     Employees employees = employeesRepository.getEmployeeWithLeastTask().get(0);
     Shippers shippers = shippersRepository.getShipper(orderDto.getSpeedPriority());
     if (shippers == null) {
       System.out.println("Shipper with priority " + orderDto.getSpeedPriority() + "does not exist");
       throw new RuntimeException();
     }
-    Orders orders = Orders.builder().orderDate(new Date()).customers(customer).employees(employees).shippers(shippers)
-        .id(UUID.randomUUID().toString()).build();
-    Orders savedOrders = ordersRepository.save(orders);
-    OrderDetails orderDetails =
-        OrderDetails.builder().quantity(orderDto.getQuantity()).orders(savedOrders).products(product).build();
+    Orders orders = Orders.builder()
+        .orderDate(new Date())
+        .customers(customer)
+        .employees(employees)
+        .shippers(shippers)
+        .id(UUID.randomUUID().toString())
+        .build();
+    List<OrderDetails> orderDetails = new ArrayList<>();
+    Orders savedOrder = ordersRepository.save(orders);
+    for (Products products : productsList) {
+      OrderDetails createdOrderDetails =
+          OrderDetails.builder()
+              .quantity(orderDto.getProductIdToQuantityMap().get(products.getId()))
+              .products(products)
+              .orders(savedOrder)
+              .build();
+      orderDetails.add(createdOrderDetails);
+    }
     orderDetailsRepository.save(orderDetails);
     employees.setTask(employees.getTask() + 1);
     employeesRepository.save(employees);

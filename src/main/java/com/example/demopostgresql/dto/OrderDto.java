@@ -1,5 +1,7 @@
 package com.example.demopostgresql.dto;
 
+import java.util.Map;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +17,6 @@ import lombok.NoArgsConstructor;
 public class OrderDto {
 
   private String customerName;
-  private String productId;
+  private Map<String, Integer> productIdToQuantityMap;
   private int speedPriority;
-  private int quantity;
 }

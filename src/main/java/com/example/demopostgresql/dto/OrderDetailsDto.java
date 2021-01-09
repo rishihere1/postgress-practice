@@ -1,6 +1,7 @@
 package com.example.demopostgresql.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,17 +24,14 @@ public class OrderDetailsDto {
   private String postalCode;
   private String country;
   private Date orderDate;
-  private long quantity;
   private String lastName;
   private String firstName;
   private Date birthDate;
   private String photo;
   private String notes;
   private int task;
-  private String productName;
-  private String unit;
-  private double price;
   private String shipperName;
   private String phoneNumber;
   private int priority;
+  private List<ProductResponseDto> productResponseDtoList;
 }

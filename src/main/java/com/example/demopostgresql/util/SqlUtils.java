@@ -63,37 +63,17 @@ public class SqlUtils {
 
   /**
    *
-   * Request body for addData api
-   {
-   "customerName" : "Cactus Comidas para llevar",
-   "contactName" : "Patricio Simpson",
-   "customerAddress" : "Cerrito 333",
-   "customerCity" : "Buenos Aires",
-   "customerPostalCode" : "1010",
-   "customerCountry" : "Argentina",
-   "employeeLastName" : "West",
-   "employeeFirstName" : "Adam",
-   "employeeBirthDate" : "2019-09-02T02:10:00.000Z",
-   "employeePhoto" : "EmpID10.pic",
-   "employeeNotes" : "An old chum.",
-   "orderDetailsQuantity" : 2,
-   "ordersDate" : "2019-07-25T22:00:00.000Z",
-   "productName" : "Queso Manchego La Pastora",
-   "productUnit" : "1 kg pkg.",
-   "productPrice" : 40,
-   "shipperName" : "Federal Shipping",
-   "shipperPhoneNumber" : "(503) 555-9931"
-   }
-
-
-
+   *
     Order api request body
-
    {
-   "customerName" : "Princesa Isabel Vinhoss",
-   "productId" : "10",
-   "speedPriority" : 1,
-   "quantity" : 2
+     "customerName" : "White Clover Markets",
+     "productIdToQuantityMap" : {
+         "2" : 20,
+         "4" : 30,
+         "6" : 40,
+         "8" : 50
+     },
+     "speedPriority" : 1
    }
    */
 }

@@ -49,23 +49,24 @@ public class Orders implements Serializable {
   @Column(name = "order_date")
   private Date orderDate;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "employees_fk")
   private Employees employees;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "shipper_fk")
   private Shippers shippers;
 
   @JsonBackReference
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
   @JoinColumn(name = "customers_fk")
   private Customers customers;
 
   @JsonManagedReference
   @OneToMany(mappedBy = "orders",
              fetch = FetchType.LAZY,
-             cascade = CascadeType.ALL)
+             cascade = CascadeType.REMOVE,
+             orphanRemoval = true)
   private Set<OrderDetails> orderDetails = new HashSet<>();
 
   @Override

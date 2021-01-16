@@ -49,7 +49,7 @@ public class OrderDetails implements Serializable {
   @JoinColumn(name = "orders_fk")
   private Orders orders;
 
-  @OneToOne(cascade = CascadeType.ALL)
+  @OneToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "products_fk")
   private Products products;
 

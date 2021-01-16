@@ -13,4 +13,6 @@ public interface SqlService {
   void order(OrderDto orderDto);
 
   List<OrderDetailsDto> getOrderDetails(String customerId);
+
+  void cancelOrder(String orderId);
 }

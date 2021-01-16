@@ -32,6 +32,13 @@ public class SqlController {
 
   @GetMapping("/getOrderDetail")
   public List<OrderDetailsDto> getOrderDetails(@RequestParam String customerId) {
+    System.out.println("get detail api");
     return sqlService.getOrderDetails(customerId);
+  }
+
+  @PostMapping("/cancelOrder")
+  public String cancelOrder(@RequestParam String orderId) {
+    sqlService.cancelOrder(orderId);
+    return "Order cancelled successfully";
   }
 }

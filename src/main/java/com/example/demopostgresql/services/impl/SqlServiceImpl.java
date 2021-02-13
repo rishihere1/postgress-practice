@@ -14,12 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demopostgresql.dto.OrderDetailsDto;
 import com.example.demopostgresql.dto.OrderDto;
 import com.example.demopostgresql.dto.ProductResponseDto;
+import com.example.demopostgresql.entity.Category;
 import com.example.demopostgresql.entity.Customers;
 import com.example.demopostgresql.entity.Employees;
 import com.example.demopostgresql.entity.OrderDetails;
 import com.example.demopostgresql.entity.Orders;
 import com.example.demopostgresql.entity.Products;
 import com.example.demopostgresql.entity.Shippers;
+import com.example.demopostgresql.repository.CategoryRepository;
 import com.example.demopostgresql.repository.CustomersRepository;
 import com.example.demopostgresql.repository.EmployeesRepository;
 import com.example.demopostgresql.repository.OrderDetailsRepository;
@@ -51,6 +53,9 @@ public class SqlServiceImpl implements SqlService {
 
   @Autowired
   private ShippersRepository shippersRepository;
+
+  @Autowired
+  private CategoryRepository categoryRepository;
 
   @Override
   public void order(OrderDto orderDto) {
@@ -131,5 +136,14 @@ public class SqlServiceImpl implements SqlService {
   public void cancelOrder(String orderId) {
     System.out.println(orderId);
     ordersRepository.delete(orderId);
+  }
+
+  @Override
+  public void getCategories(String value) {
+    Category category = categoryRepository.findOne(value);
+    List<Category> categories = category.getChildren();
+    for (Category each : categories) {
+      System.out.println(each.getDesignation());
+    }
   }
 }

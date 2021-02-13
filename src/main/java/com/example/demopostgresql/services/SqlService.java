@@ -15,4 +15,6 @@ public interface SqlService {
   List<OrderDetailsDto> getOrderDetails(String customerId);
 
   void cancelOrder(String orderId);
+
+  void getCategories(String value);
 }

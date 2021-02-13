@@ -41,4 +41,10 @@ public class SqlController {
     sqlService.cancelOrder(orderId);
     return "Order cancelled successfully";
   }
+
+  @PostMapping("/getCategories")
+  public String getCategories(@RequestParam String value) {
+    sqlService.getCategories(value);
+    return "Done";
+  }
 }

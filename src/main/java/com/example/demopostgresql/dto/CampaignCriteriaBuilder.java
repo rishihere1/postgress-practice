@@ -41,6 +41,8 @@ import com.example.demopostgresql.repository.RuleType;
 @Service
 public class CampaignCriteriaBuilder implements Specification<Campaign> {
 
+  // Specification criteria query being used in filter queries where some parameters are ignored and some added based on input from user
+
   private static final String CAMPAIGN_RULE_MERCHANT = "campaignRuleSetMerchantSelect";
   private static final String DATE_PATTERN = "dd-MM-yyyy";
   private static final String TO_CHAR_CRITERIA_FUNCTION = "to_char";

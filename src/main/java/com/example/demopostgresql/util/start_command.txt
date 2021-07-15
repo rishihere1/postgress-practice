@@ -1,0 +1,58 @@
+Mongo Start Command
+
+./mongod --dbpath /Users/rishiraj/Downloads/mongodb-osx-x86_64-3.2.22
+
+Run this command in bin of mongo
+
+Then in another tab, do --> ./mongo
+
+Solr start command
+
+cd solr-8.6.1/
+
+bin/solr start
+
+
+Rabbit mq start command
+
+Start :
+brew services start rabbitmq
+
+Stop :
+brew services stop  rabbitmq
+
+
+Redis start command
+
+* start Redis server:
+brew services start redis
+
+
+* stop Redis server:
+brew services stop redis
+
+
+* restart Redis server:
+brew services restart redis
+
+
+
+Kafka start command
+
+Kafka Configuration:-
+
+To send data from
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+
+To receive
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+
+To start Kafka
+bin/kafka-server-start.sh config/server.properties
+
+To start zookeeper
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+
+Note:-
+Every command has to be written inside kafka_2.13-2.4.0
